@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { Link } from 'react-router-dom'
 import './Users.css'
 
 export default function Users() {
@@ -95,7 +96,9 @@ export default function Users() {
                             {user.name.charAt(0)}
                           </div>
                           <div>
-                            <div className="user-fullname">{user.name}</div>
+                            <Link to={`/users/${user.id}`} className="user-fullname user-link">
+                              {user.name}
+                            </Link>
                             <div className="user-username">@{user.username}</div>
                           </div>
                         </div>

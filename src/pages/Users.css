@@ -115,6 +115,16 @@
   font-size: 0.875rem;
 }
 
+.user-link {
+  color: #1a1a2e;
+  text-decoration: none;
+}
+
+.user-link:hover {
+  color: #6c63ff;
+  text-decoration: underline;
+}
+
 .user-username {
   font-size: 0.75rem;
   color: #94a3b8;
