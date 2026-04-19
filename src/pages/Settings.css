@@ -1,5 +1,8 @@
+/* Settings-specific styles */
+/* Bug #12 fix: Renamed .dash-header to .settings-header to avoid conflict with Dashboard.css */
+
 /* Header */
-.dash-header {
+.settings-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -9,7 +12,7 @@
   transition: opacity 0.35s ease, transform 0.35s ease;
 }
 
-.dash-header.visible {
+.settings-header.visible {
   opacity: 1;
   transform: translateY(0);
 }
@@ -159,6 +162,12 @@
 }
 
 /* Danger */
+.delete-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
 .danger-btn {
   padding: 0.45rem 1rem;
   background: #fee2e2;
@@ -168,7 +177,44 @@
   font-size: 0.85rem;
   font-weight: 600;
   cursor: pointer;
-  transition: background 0.15s;
+  transition: background 0.15s, transform 0.15s;
 }
 
 .danger-btn:hover { background: #fecaca; }
+
+.danger-btn.confirm {
+  background: #ef4444;
+  color: #fff;
+  animation: pulse-danger 1s infinite;
+}
+
+.danger-btn.confirm:hover { background: #dc2626; }
+
+.cancel-btn {
+  padding: 0.45rem 1rem;
+  background: #f1f5f9;
+  color: #475569;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.cancel-btn:hover { background: #e2e8f0; }
+
+@keyframes pulse-danger {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.4); }
+  50% { box-shadow: 0 0 0 6px rgba(239, 68, 68, 0); }
+}
+
+/* Dark mode overrides for settings-specific elements */
+body.dark-mode .settings-card {
+  background: #1e1e2f;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.3);
+}
+
+body.dark-mode .settings-header { /* inherits dark mode */ }
+body.dark-mode .cancel-btn { background: #374151; color: #e2e8f0; }
+body.dark-mode .cancel-btn:hover { background: #4b5563; }

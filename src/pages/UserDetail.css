@@ -1,3 +1,5 @@
+/* UserDetail-specific styles — shared styles (.card, .badge, .state-box, .spinner) are in index.css */
+
 /* Breadcrumb */
 .breadcrumb {
   display: flex;
@@ -18,6 +20,34 @@
   text-decoration: underline;
 }
 
+/* Back button (Bug #4 fix) */
+.back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.45rem 1rem;
+  background: #f1f5f9;
+  color: #475569;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background 0.15s, color 0.15s;
+  margin-bottom: 1rem;
+}
+
+.back-btn:hover {
+  background: #e2e8f0;
+  color: #1a1a2e;
+}
+
+.back-btn svg {
+  width: 16px;
+  height: 16px;
+}
+
 /* Layout */
 .detail-grid {
   display: grid;
@@ -30,21 +60,6 @@
   display: flex;
   flex-direction: column;
   gap: 1.25rem;
-}
-
-/* Card base */
-.card {
-  background: #fff;
-  border-radius: 12px;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.07);
-  padding: 1.5rem;
-}
-
-.card-title {
-  font-size: 0.95rem;
-  font-weight: 700;
-  color: #1a1a2e;
-  margin-bottom: 1.1rem;
 }
 
 /* Profile card */
@@ -112,6 +127,8 @@
 }
 
 /* Info grid */
+.info-card { padding: 1.5rem; }
+
 .info-grid {
   display: flex;
   flex-direction: column;
@@ -145,6 +162,8 @@
 }
 
 /* Posts list */
+.posts-card { padding: 1.5rem; }
+
 .posts-list {
   list-style: none;
   display: flex;
@@ -185,46 +204,26 @@
   text-align: center;
 }
 
-/* Badge */
-.badge {
-  display: inline-block;
-  padding: 0.2rem 0.6rem;
-  border-radius: 999px;
-  font-size: 0.72rem;
-  font-weight: 600;
-}
-
-.badge.active {
-  background: #dcfce7;
-  color: #16a34a;
-}
-
-/* States */
-.state-box {
+/* Error page */
+.error-page {
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 0.75rem;
-  padding: 4rem;
-  color: #64748b;
-  font-size: 0.9rem;
+  padding: 4rem 2rem;
+  text-align: center;
+  gap: 1rem;
 }
 
-.state-box.error {
+.error-page h2 {
+  font-size: 1.3rem;
+  font-weight: 700;
   color: #ef4444;
 }
 
-.spinner {
-  width: 22px;
-  height: 22px;
-  border: 3px solid #e2e8f0;
-  border-top-color: #6c63ff;
-  border-radius: 50%;
-  animation: spin 0.7s linear infinite;
-}
-
-@keyframes spin {
-  to { transform: rotate(360deg); }
+.error-page p {
+  color: #64748b;
+  font-size: 0.9rem;
 }
 
 @media (max-width: 768px) {

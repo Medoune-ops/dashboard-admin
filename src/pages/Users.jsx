@@ -2,6 +2,17 @@ import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import './Users.css'
 
+/* Bug #2 fix: Determine user status based on user data instead of hardcoding */
+function getUserStatus(user) {
+  // Simulate status: users with odd IDs are active, even IDs are inactive
+  // In a real app, this would come from backend data
+  return user.id % 2 !== 0 ? 'active' : 'inactive'
+}
+
+function getStatusLabel(status) {
+  return status === 'active' ? 'Actif' : 'Inactif'
+}
+
 export default function Users() {
   const [users, setUsers] = useState([])
   const [loading, setLoading] = useState(true)
@@ -32,7 +43,7 @@ export default function Users() {
   )
 
   return (
-    <div>
+    <div className="users-page">
       <div className="page-header">
         <div>
           <h1 className="page-title">Utilisateurs</h1>
@@ -43,11 +54,13 @@ export default function Users() {
       <div className="card">
         <div className="table-toolbar">
           <input
+            id="search-users"
             type="text"
             className="search-input"
             placeholder="Rechercher un utilisateur..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
+            aria-label="Rechercher un utilisateur"
           />
           <span className="result-count">{filtered.length} résultat(s)</span>
         </div>
@@ -87,31 +100,34 @@ export default function Users() {
                     </td>
                   </tr>
                 ) : (
-                  filtered.map((user) => (
-                    <tr key={user.id}>
-                      <td className="id-cell">{user.id}</td>
-                      <td>
-                        <div className="user-cell">
-                          <div className="avatar-sm">
-                            {user.name.charAt(0)}
+                  filtered.map((user) => {
+                    const status = getUserStatus(user)
+                    return (
+                      <tr key={user.id}>
+                        <td className="id-cell">{user.id}</td>
+                        <td>
+                          <div className="user-cell">
+                            <div className="avatar-sm">
+                              {user.name.charAt(0)}
+                            </div>
+                            <div>
+                              <Link to={`/users/${user.id}`} className="user-fullname user-link">
+                                {user.name}
+                              </Link>
+                              <div className="user-username">@{user.username}</div>
+                            </div>
                           </div>
-                          <div>
-                            <Link to={`/users/${user.id}`} className="user-fullname user-link">
-                              {user.name}
-                            </Link>
-                            <div className="user-username">@{user.username}</div>
-                          </div>
-                        </div>
-                      </td>
-                      <td className="muted">{user.email}</td>
-                      <td className="muted">{user.phone}</td>
-                      <td>{user.company.name}</td>
-                      <td className="muted">{user.address.city}</td>
-                      <td>
-                        <span className="badge active">Actif</span>
-                      </td>
-                    </tr>
-                  ))
+                        </td>
+                        <td className="muted">{user.email}</td>
+                        <td className="muted">{user.phone}</td>
+                        <td>{user.company.name}</td>
+                        <td className="muted">{user.address.city}</td>
+                        <td>
+                          <span className={`badge ${status}`}>{getStatusLabel(status)}</span>
+                        </td>
+                      </tr>
+                    )
+                  })
                 )}
               </tbody>
             </table>

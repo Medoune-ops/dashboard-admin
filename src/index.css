@@ -8,12 +8,17 @@ body {
   font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
   background: #f0f2f5;
   color: #1a1a2e;
+  transition: background 0.3s ease, color 0.3s ease;
 }
 
 #root {
   display: flex;
   min-height: 100vh;
 }
+
+/* ============================
+   SHARED TOKENS (Bug #11 fix)
+   ============================ */
 
 .page-title {
   font-size: 1.75rem;
@@ -26,3 +31,191 @@ body {
   color: #64748b;
   font-size: 0.95rem;
 }
+
+/* Shared page-header (used in Users, Analytics) */
+.page-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+}
+
+/* Shared .card base */
+.card {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.07);
+  padding: 1.5rem;
+}
+
+.card-title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #1a1a2e;
+  margin-bottom: 1.1rem;
+}
+
+/* Shared badge */
+.badge {
+  display: inline-block;
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 600;
+}
+
+.badge.active  { background: #dcfce7; color: #16a34a; }
+.badge.inactive { background: #fee2e2; color: #ef4444; }
+
+/* Shared state-box */
+.state-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  padding: 3rem;
+  color: #64748b;
+  font-size: 0.9rem;
+}
+
+.state-box.error {
+  color: #ef4444;
+}
+
+/* Shared spinner */
+.spinner {
+  width: 22px;
+  height: 22px;
+  border: 3px solid #e2e8f0;
+  border-top-color: #6c63ff;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ============================
+   DARK MODE (Bug #6 fix)
+   ============================ */
+
+body.dark-mode {
+  background: #0f0f1a;
+  color: #e2e8f0;
+}
+
+body.dark-mode .page-title { color: #f1f5f9; }
+body.dark-mode .page-subtitle { color: #94a3b8; }
+
+body.dark-mode .card,
+body.dark-mode .settings-card,
+body.dark-mode .dash-kpi-card,
+body.dark-mode .dash-chart-card,
+body.dark-mode .dash-activity-card,
+body.dark-mode .kpi-card,
+body.dark-mode .chart-card {
+  background: #1e1e2f;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+}
+
+body.dark-mode .dash-kpi-value,
+body.dark-mode .kpi-value,
+body.dark-mode .profile-name,
+body.dark-mode .stat-value,
+body.dark-mode .dash-activity-text,
+body.dark-mode .dash-section-title,
+body.dark-mode .chart-title,
+body.dark-mode .card-title,
+body.dark-mode .settings-row-label,
+body.dark-mode .user-fullname,
+body.dark-mode .info-value,
+body.dark-mode .post-title {
+  color: #f1f5f9;
+}
+
+body.dark-mode .dash-kpi-label,
+body.dark-mode .kpi-label,
+body.dark-mode .dash-activity-sub,
+body.dark-mode .dash-activity-time,
+body.dark-mode .settings-row-sub,
+body.dark-mode .muted,
+body.dark-mode .user-username,
+body.dark-mode .info-label,
+body.dark-mode .post-id,
+body.dark-mode .result-count,
+body.dark-mode .breadcrumb,
+body.dark-mode .stat-label,
+body.dark-mode .profile-username,
+body.dark-mode .kpi-change,
+body.dark-mode .id-cell,
+body.dark-mode .posts-more {
+  color: #94a3b8;
+}
+
+body.dark-mode .users-table thead tr { background: #16162a; }
+body.dark-mode .users-table td { border-top-color: rgba(255,255,255,0.06); color: #cbd5e1; }
+body.dark-mode .users-table tbody tr:hover { background: #252540; }
+body.dark-mode .user-link { color: #f1f5f9; }
+body.dark-mode .user-link:hover { color: #8b83ff; }
+
+body.dark-mode .search-input,
+body.dark-mode .settings-input {
+  background: #16162a;
+  border-color: rgba(255,255,255,0.1);
+  color: #e2e8f0;
+}
+
+body.dark-mode .search-input:focus,
+body.dark-mode .settings-input:focus {
+  border-color: #6c63ff;
+}
+
+body.dark-mode .table-toolbar { border-bottom-color: rgba(255,255,255,0.06); }
+body.dark-mode .settings-row { border-bottom-color: rgba(255,255,255,0.06); }
+body.dark-mode .settings-row:hover { background: #252540; }
+body.dark-mode .info-row { border-bottom-color: rgba(255,255,255,0.06); }
+body.dark-mode .dash-activity-item { border-bottom-color: rgba(255,255,255,0.06); }
+body.dark-mode .profile-stats { border-top-color: rgba(255,255,255,0.06); }
+body.dark-mode .post-item { border-bottom-color: rgba(255,255,255,0.06); }
+
+body.dark-mode .toggle { background: #374151; }
+body.dark-mode .toggle.on { background: #6c63ff; }
+
+body.dark-mode .empty-row { color: #64748b; }
+
+body.dark-mode .sidebar { background: #0a0a14; }
+
+/* ============================
+   COMPACT MODE (Bug #7 fix)
+   ============================ */
+
+body.compact-mode .main-content { padding: 1rem; }
+body.compact-mode .page-title { font-size: 1.35rem; margin-bottom: 0.25rem; }
+body.compact-mode .page-header { margin-bottom: 1rem; }
+
+body.compact-mode .card { padding: 1rem; }
+body.compact-mode .settings-card { /* inherits compact card */ }
+body.compact-mode .settings-row { padding: 0.6rem 1rem; }
+body.compact-mode .settings-section { margin-bottom: 1rem; }
+
+body.compact-mode .dash-kpi-card { padding: 0.85rem 1rem; }
+body.compact-mode .dash-kpi-value { font-size: 1.3rem; }
+body.compact-mode .dash-kpi-grid { gap: 0.75rem; margin-bottom: 0.85rem; }
+body.compact-mode .dash-bottom { gap: 0.85rem; }
+body.compact-mode .dash-chart-card,
+body.compact-mode .dash-activity-card { padding: 1rem; }
+body.compact-mode .dash-activity-item { padding: 0.45rem 0; }
+
+body.compact-mode .kpi-card { padding: 0.85rem 1rem; }
+body.compact-mode .kpi-value { font-size: 1.3rem; }
+body.compact-mode .kpi-grid { gap: 0.75rem; margin-bottom: 0.85rem; }
+body.compact-mode .charts-row { gap: 0.85rem; margin-bottom: 0.85rem; }
+body.compact-mode .chart-card { padding: 0.85rem 1rem; }
+
+body.compact-mode .users-table th { padding: 0.5rem 0.85rem; }
+body.compact-mode .users-table td { padding: 0.6rem 0.85rem; }
+
+body.compact-mode .detail-grid { gap: 0.85rem; }
+body.compact-mode .info-row { padding: 0.45rem 0; }
+body.compact-mode .post-item { padding: 0.45rem 0; }

@@ -1,15 +1,33 @@
 import { useState, useEffect } from 'react'
-import { useParams, Link } from 'react-router-dom'
+import { useParams, Link, useNavigate } from 'react-router-dom'
 import './UserDetail.css'
+
+/* Bug #2 fix: Same status logic as Users.jsx */
+function getUserStatus(user) {
+  return user.id % 2 !== 0 ? 'active' : 'inactive'
+}
+
+function getStatusLabel(status) {
+  return status === 'active' ? 'Actif' : 'Inactif'
+}
 
 export default function UserDetail() {
   const { id } = useParams()
+  const navigate = useNavigate()
   const [user, setUser] = useState(null)
   const [posts, setPosts] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
 
+  /* Bug #3 fix: Validate ID before fetching */
   useEffect(() => {
+    const numId = Number(id)
+    if (!id || isNaN(numId) || numId < 1 || !Number.isInteger(numId)) {
+      setError(`ID invalide : "${id}". L'ID doit être un nombre entier positif.`)
+      setLoading(false)
+      return
+    }
+
     Promise.all([
       fetch(`https://jsonplaceholder.typicode.com/users/${id}`).then((r) => {
         if (!r.ok) throw new Error('Utilisateur introuvable')
@@ -20,6 +38,10 @@ export default function UserDetail() {
       ),
     ])
       .then(([userData, postsData]) => {
+        // Additional validation: API may return empty object for non-existent IDs
+        if (!userData || !userData.id) {
+          throw new Error('Utilisateur introuvable')
+        }
         setUser(userData)
         setPosts(postsData)
         setLoading(false)
@@ -39,16 +61,34 @@ export default function UserDetail() {
     )
   }
 
+  /* Bug #3 fix: Better error display with navigation */
   if (error) {
     return (
-      <div className="state-box error">
-        <span>Erreur : {error}</span>
+      <div className="error-page">
+        <h2>⚠️ {error}</h2>
+        <p>Vérifiez l'URL ou retournez à la liste des utilisateurs.</p>
+        <Link to="/users" className="back-btn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
+            <path d="M19 12H5" /><polyline points="12 19 5 12 12 5" />
+          </svg>
+          Retour aux utilisateurs
+        </Link>
       </div>
     )
   }
 
+  const status = getUserStatus(user)
+
   return (
     <div>
+      {/* Bug #4 fix: Back button */}
+      <button className="back-btn" onClick={() => navigate('/users')}>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
+          <path d="M19 12H5" /><polyline points="12 19 5 12 12 5" />
+        </svg>
+        Retour
+      </button>
+
       <div className="breadcrumb">
         <Link to="/users">Utilisateurs</Link>
         <span>/</span>
@@ -61,7 +101,7 @@ export default function UserDetail() {
           <div className="profile-avatar">{user.name.charAt(0)}</div>
           <h2 className="profile-name">{user.name}</h2>
           <p className="profile-username">@{user.username}</p>
-          <span className="badge active">Actif</span>
+          <span className={`badge ${status}`}>{getStatusLabel(status)}</span>
 
           <div className="profile-stats">
             <div className="stat">
